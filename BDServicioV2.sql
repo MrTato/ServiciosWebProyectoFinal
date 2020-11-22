@@ -1,4 +1,8 @@
-USE [BDServicio]
+USE [master]
+GO
+CREATE DATABASE [BDServicioV2]
+GO
+USE [BDServicioV2]
 GO
 /****** Object:  Table [dbo].[Cliente]    Script Date: 11/22/2020 12:48:51 PM ******/
 SET ANSI_NULLS ON
@@ -28,6 +32,7 @@ CREATE TABLE [dbo].[DetalleFactura](
 	[IdFactura] [int] NOT NULL,
 	[IdServicio] [int] NOT NULL,
 	[Cantidad] [int] NOT NULL,
+	[Entregado] [bit],
  CONSTRAINT [PK_DetalleFactura] PRIMARY KEY CLUSTERED 
 (
 	[IdDetalleFactura] ASC
@@ -43,8 +48,8 @@ CREATE TABLE [dbo].[Factura](
 	[IdFactura] [int] IDENTITY(1,1) NOT NULL,
 	[Numero] [varchar](5) NOT NULL,
 	[IdCliente] [int] NOT NULL,
+	[IdDireccion] [int] NOT NULL,
 	[Fecha] [date] NOT NULL,
-	[IdZonaCliente] [int] NOT NULL,
 	[Total] [money] NOT NULL,
  CONSTRAINT [PK_Factura] PRIMARY KEY CLUSTERED 
 (
@@ -90,7 +95,6 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Ubicacion](
 	[IdUbicacion] [int] IDENTITY(1,1) NOT NULL,
-	[IdMaestro] [int] NOT NULL,
 	[Nombre] [nvarchar](50) NOT NULL,
 	[Tipo] [nvarchar](50) NOT NULL,
  CONSTRAINT [PK_Ubicacion] PRIMARY KEY CLUSTERED 
@@ -99,35 +103,19 @@ CREATE TABLE [dbo].[Ubicacion](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Zona]    Script Date: 11/22/2020 12:48:51 PM ******/
+/****** Object:  Table [dbo].[Direccion]    Script Date: 11/22/2020 12:48:51 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [dbo].[Zona](
-	[IdZona] [int] IDENTITY(1,1) NOT NULL,
+CREATE TABLE [dbo].[Direccion] (
+	[IdDireccion] [int] IDENTITY(1,1) NOT NULL,
 	[IdUbicacion] [int] NOT NULL,
-	[Nombre] [nvarchar](50) NOT NULL,
- CONSTRAINT [PK_Zona] PRIMARY KEY CLUSTERED 
-(
-	[IdZona] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-/****** Object:  Table [dbo].[ZonaCliente]    Script Date: 11/22/2020 12:48:51 PM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[ZonaCliente](
-	[IdZonaCliente] [int] IDENTITY(1,1) NOT NULL,
-	[IdZona] [int] NOT NULL,
 	[IdCliente] [int] NOT NULL,
-	[Estado] [nvarchar](10) NULL,
-	[Direccion] [nvarchar](300) NOT NULL,
- CONSTRAINT [PK_ZonaCliente] PRIMARY KEY CLUSTERED 
+	[Direccion] [nvarchar](200) NOT NULL,
+ CONSTRAINT [PK_Direccion] PRIMARY KEY CLUSTERED 
 (
-	[IdZonaCliente] ASC
+	[IdDireccion] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
@@ -146,28 +134,23 @@ REFERENCES [dbo].[Cliente] ([IdCliente])
 GO
 ALTER TABLE [dbo].[Factura] CHECK CONSTRAINT [FK_Factura_Cliente]
 GO
-ALTER TABLE [dbo].[Factura]  WITH CHECK ADD  CONSTRAINT [FK_Factura_ZonaCliente] FOREIGN KEY([IdZonaCliente])
-REFERENCES [dbo].[ZonaCliente] ([IdZonaCliente])
-GO
-ALTER TABLE [dbo].[Factura] CHECK CONSTRAINT [FK_Factura_ZonaCliente]
-GO
 ALTER TABLE [dbo].[Servicio]  WITH CHECK ADD  CONSTRAINT [FK_Servicio_TipoServicio] FOREIGN KEY([IdTipoServicio])
 REFERENCES [dbo].[TipoServicio] ([IdTipoServicio])
 GO
 ALTER TABLE [dbo].[Servicio] CHECK CONSTRAINT [FK_Servicio_TipoServicio]
 GO
-ALTER TABLE [dbo].[Zona]  WITH CHECK ADD  CONSTRAINT [FK_Zona_Ubicacion] FOREIGN KEY([IdUbicacion])
+ALTER TABLE [dbo].[Direccion]  WITH CHECK ADD  CONSTRAINT [FK_Direccion_Ubicacion] FOREIGN KEY([IdUbicacion])
 REFERENCES [dbo].[Ubicacion] ([IdUbicacion])
 GO
-ALTER TABLE [dbo].[Zona] CHECK CONSTRAINT [FK_Zona_Ubicacion]
+ALTER TABLE [dbo].[Direccion] CHECK CONSTRAINT [FK_Direccion_Ubicacion]
 GO
-ALTER TABLE [dbo].[ZonaCliente]  WITH CHECK ADD  CONSTRAINT [FK_ZonaCliente_Cliente] FOREIGN KEY([IdCliente])
+ALTER TABLE [dbo].[Direccion]  WITH CHECK ADD  CONSTRAINT [FK_Direccion_Cliente] FOREIGN KEY([IdCliente])
 REFERENCES [dbo].[Cliente] ([IdCliente])
 GO
-ALTER TABLE [dbo].[ZonaCliente] CHECK CONSTRAINT [FK_ZonaCliente_Cliente]
+ALTER TABLE [dbo].[Direccion] CHECK CONSTRAINT [FK_Direccion_Cliente]
 GO
-ALTER TABLE [dbo].[ZonaCliente]  WITH CHECK ADD  CONSTRAINT [FK_ZonaCliente_Zona] FOREIGN KEY([IdZona])
-REFERENCES [dbo].[Zona] ([IdZona])
+ALTER TABLE [dbo].[Factura]  WITH CHECK ADD  CONSTRAINT [FK_Factura_Direccion] FOREIGN KEY([IdDireccion])
+REFERENCES [dbo].[Direccion] ([IdDireccion])
 GO
-ALTER TABLE [dbo].[ZonaCliente] CHECK CONSTRAINT [FK_ZonaCliente_Zona]
+ALTER TABLE [dbo].[Factura] CHECK CONSTRAINT [FK_Factura_Direccion]
 GO
