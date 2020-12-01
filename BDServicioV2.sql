@@ -13,7 +13,7 @@ CREATE TABLE [dbo].[Cliente](
 	[IdCliente] [int] IDENTITY(1,1) NOT NULL,
 	[Nombre] [nvarchar](50) NOT NULL,
 	[Apellido] [nvarchar](50) NOT NULL,
-	[Telefono] [char](12) NULL,
+	[Telefono] [char](14) NULL,
 	[Tipo] [nvarchar](100) NULL,
 	[Estado] [nvarchar](10) NULL,
  CONSTRAINT [PK_Cliente] PRIMARY KEY CLUSTERED 
