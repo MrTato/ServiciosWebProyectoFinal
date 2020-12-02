@@ -374,6 +374,16 @@ main {
     font-size: 18px;
 }
 
+.sidebar-link:hover {
+    background-color: rgba(72, 219, 251, 0.3);
+    color: #48dbfb;
+    border-radius: 5px;
+}
+
+.sidebar-link > a:hover {
+    color: #48dbfb !important;
+}
+
 .sidebar-logout {
     margin-top: 20px;
     padding: 10px;

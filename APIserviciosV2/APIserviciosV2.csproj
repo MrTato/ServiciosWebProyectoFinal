@@ -175,10 +175,12 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\ClientesController.cs" />
+    <Compile Include="Controllers\DetailInvoiceController.cs" />
     <Compile Include="Controllers\DetalleFacturasController.cs" />
     <Compile Include="Controllers\DireccionsController.cs" />
     <Compile Include="Controllers\FacturasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ListClientController.cs" />
     <Compile Include="Controllers\ServiciosController.cs" />
     <Compile Include="Controllers\TipoServiciosController.cs" />
     <Compile Include="Controllers\TokenController.cs" />
@@ -274,6 +276,21 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ModelServicio.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\ModelSTPR.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelSTPR.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ModelSTPR.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelSTPR.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ModelSTPR.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelSTPR.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Models\ModelTipoServicio.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -306,6 +323,15 @@
     </Compile>
     <Compile Include="Models\Servicio.cs">
       <DependentUpon>ModelServicio.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SP_DetailInvoice_Result.cs">
+      <DependentUpon>ModelSTPR.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SP_DetailsInvoice_Result.cs">
+      <DependentUpon>ModelSTPR.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SP_ListClient_Result.cs">
+      <DependentUpon>ModelSTPR.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TipoServicio.cs">
       <DependentUpon>ModelTipoServicio.tt</DependentUpon>
@@ -376,6 +402,16 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ModelServicio.edmx</DependentUpon>
       <LastGenOutput>ModelServicio.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\ModelSTPR.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelSTPR.edmx</DependentUpon>
+      <LastGenOutput>ModelSTPR.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\ModelSTPR.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelSTPR.edmx</DependentUpon>
+      <LastGenOutput>ModelSTPR.cs</LastGenOutput>
     </Content>
     <Content Include="Models\ModelTipoServicio.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -466,6 +502,13 @@
     </EntityDeploy>
     <Content Include="Models\ModelUbicacion.edmx.diagram">
       <DependentUpon>ModelUbicacion.edmx</DependentUpon>
+    </Content>
+    <EntityDeploy Include="Models\ModelSTPR.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ModelSTPR.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\ModelSTPR.edmx.diagram">
+      <DependentUpon>ModelSTPR.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
