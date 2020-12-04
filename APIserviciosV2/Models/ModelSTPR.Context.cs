@@ -41,5 +41,10 @@ namespace APIserviciosV2.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_DetailInvoice_Result>("SP_DetailInvoice_Result", idParameter);
         }
+    
+        public virtual ObjectResult<SP_Indicadores_Result> SP_Indicadores_Result()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_Indicadores_Result>("SP_Indicadores_Result");
+        }
     }
 }

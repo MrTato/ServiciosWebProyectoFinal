@@ -8,6 +8,7 @@
         <Function Name="SP_DetailInvoice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Id" Type="int" Mode="In" />
         </Function>
+        <Function Name="SP_Indicadores" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="SP_ListClient" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="BDServicioV2ModelSTPRStoreContainer" />
       </Schema></edmx:StorageModels>
@@ -17,8 +18,9 @@
         <EntityContainer Name="BDServicioV2EntitiesSTPR" annotation:LazyLoadingEnabled="true" >
           <FunctionImport Name="SP_ListClient_Result" ReturnType="Collection(BDServicioV2ModelSTPR.SP_ListClient_Result)" />
           <FunctionImport Name="SP_DetailInvoice_Result" ReturnType="Collection(BDServicioV2ModelSTPR.SP_DetailInvoice_Result)">
-            <Parameter Name="Id" Mode="In" Type="Int32" />
+          <Parameter Name="Id" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="SP_Indicadores_Result" ReturnType="Collection(BDServicioV2ModelSTPR.SP_Indicadores_Result)" />
         </EntityContainer>
         <ComplexType Name="SP_DetailsInvoice_Result">
           <Property Type="String" Name="Nombre" Nullable="false" MaxLength="50" />
@@ -54,6 +56,12 @@
           <Property Type="String" Name="Direccion" Nullable="false" MaxLength="200" />
           <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="50" />
         </ComplexType>
+        <ComplexType Name="SP_Indicadores_Result">
+          <Property Type="Int32" Name="TotalFacturas" Nullable="true" />
+          <Property Type="Int32" Name="ServiciosFacturados" Nullable="true" />
+          <Property Type="Int32" Name="TotalServicios" Nullable="true" />
+          <Property Type="Int32" Name="TotalClientes" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -86,6 +94,16 @@
                 <ScalarProperty Name="CostoBase" ColumnName="CostoBase" />
                 <ScalarProperty Name="Direccion" ColumnName="Direccion" />
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_Indicadores_Result" FunctionName="BDServicioV2ModelSTPR.Store.SP_Indicadores">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BDServicioV2ModelSTPR.SP_Indicadores_Result">
+                <ScalarProperty Name="TotalFacturas" ColumnName="TotalFacturas" />
+                <ScalarProperty Name="ServiciosFacturados" ColumnName="ServiciosFacturados" />
+                <ScalarProperty Name="TotalServicios" ColumnName="TotalServicios" />
+                <ScalarProperty Name="TotalClientes" ColumnName="TotalClientes" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
