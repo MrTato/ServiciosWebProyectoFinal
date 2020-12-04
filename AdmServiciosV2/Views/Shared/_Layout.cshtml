@@ -1,42 +1,136 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="es">
+
 <head>
-    <meta charset="utf-8" />
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link href="~/Content/style-dashboard2.css" rel="stylesheet" />
+    <title>@ViewBag.Title</title>
 </head>
+
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+    <div class="container">
+        <nav class="navbar">
+            <div class="nav-icon" onclick="toggleSidebar()">
+                <i class="fa fa-bars"></i>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
+            <div class="navbar-left">
+                <a href="#">Suscripción</a>
+                <a class="active-link" href="#">Casos de soporte</a>
+            </div>
+            <div class="navbar-right">
+                <a href="#">
+                    <img width="30" src="/img/avatar.svg" alt="Avatar icon">
+                </a>
+            </div>
+        </nav>
+
+        <main>
+            <div class="main-container">
+                <div class="main-title">
+                    <img src="/img/hello.svg" alt="Hello icon">
+                    <div class="main-greeting">
+                        <h1>Hola! Hosffman</h1>
+                        <p>Bienvenido a tu dashboard</p>
+                    </div>
+                </div>
+                <div class="main-cards">
+                    <div class="card">
+                        <i class="fa fa-inbox fa-2x text-lightblue"></i>
+                        <div class="card-inner">
+                            <p class="tect-primary-p">Facturas totales</p>
+                            <span class="font-bold text-title">@ViewBag.TotalFacturas</span>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <i class="fa fa-check fa-2x text-green"></i>
+                        <div class="card-inner">
+                            <p class="tect-primary-p">Servicios facturados</p>
+                            <span class="font-bold text-title">@ViewBag.ServiciosFacturados</span>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <i class="fa fa-folder-open fa-2x text-yellow"></i>
+                        <div class="card-inner">
+                            <p class="tect-primary-p">Total de servicios</p>
+                            <span class="font-bold text-title">@ViewBag.TotalServicios</span>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <i class="fa fa-times fa-2x text-red"></i>
+                        <div class="card-inner">
+                            <p class="tect-primary-p">Clientes totales</p>
+                            <span class="font-bold text-title">@ViewBag.TotalClientes</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="charts">
+                    <div class="charts-left">
+                        <div class="charts-left-title">
+                            <div>
+                                <h1>@ViewBag.TituloChart</h1>
+                            </div>
+                            <i class="fa fa-folder-open fa-2x"></i>
+                        </div>
+
+                        <div class="list-container">
+                            @RenderBody()
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <div id="sidebar">
+            <div class="sidebar-title">
+                <div class="sidebar-img">
+                    <img src="https://beezky.com/Content/LandingV2/assets/img/logo.png" alt="Logo">
+                    <h1>Beezky</h1>
+                </div>
+                <i class="fa fa-times" id="sidebar-icon" onclick="closeSidebar()"></i>
+            </div>
+            <div class="sidebar-menu">
+                <div class="sidebar-link">
+                    <i class="fa fa-home"></i>
+                    <a >@Html.ActionLink("Home", "Index", "Home")</a>
+                </div>
+                <div class="sidebar-link">
+                    <i class="fa fa-home"></i>
+                    <a>@Html.ActionLink("Clientes", "Index", "Clientes")</a>
+                </div>
+                <div class="sidebar-link">
+                    <i class="fa fa-home"></i>
+                    <a href="#">Detalle facturas</a>
+                </div>
+                <div class="sidebar-link">
+                    <i class="fa fa-home"></i>
+                    <a href="#">Servicios</a>
+                </div>
+                <div class="sidebar-link">
+                    <i class="fa fa-home"></i>
+                    <a href="#">Tipo servicios</a>
+                </div>
+                <div class="sidebar-link">
+                    <i class="fa fa-home"></i>
+                    <a href="#">Ubicaciones</a>
+                </div>
+                <div class="sidebar-logout">
+                    <i class="fa fa-power-off"></i>
+                    <a href="#">Log out</a>
+                </div>
             </div>
         </div>
     </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
-    </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+
+
+    <script src="~/Scripts/script-dashboard.js"></script>
 </body>
+
 </html>
