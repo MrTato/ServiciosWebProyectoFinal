@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\hosff\Documents\02. UAM\00. Semestre II - 2020\06. Servicios web\ServiciosV2\APIserviciosV2\Models\ModelUbicacion.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\BayardoJLS\source\repos\Proyecto Final de Servicios Web\APIserviciosV2\Models\ModelUbicacion.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.
