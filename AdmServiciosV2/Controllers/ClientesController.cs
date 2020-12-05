@@ -14,6 +14,7 @@ namespace AdmServiciosV2.Controllers
     public class ClientesController : Controller
     {
         private string baseURL = "https://localhost:44362/";
+        private TokenController tokenController = new TokenController();
 
         // GET: Clientes
         public ActionResult Index()
@@ -23,7 +24,7 @@ namespace AdmServiciosV2.Controllers
                 return RedirectToAction("Index", "Token");
             }
 
-            new TokenController().LifeTimeValidator(System.Web.HttpContext.Current);
+            tokenController.LifeTimeValidator(System.Web.HttpContext.Current);
 
             GetInidcadores();
 
@@ -48,6 +49,8 @@ namespace AdmServiciosV2.Controllers
 
         public ActionResult DetailCliente(int id)
         {
+            tokenController.LifeTimeValidator(System.Web.HttpContext.Current);
+
             GetInidcadores();
 
             HttpClient httpClient = new HttpClient();
@@ -73,6 +76,8 @@ namespace AdmServiciosV2.Controllers
 
         public ActionResult Guardar()
         {
+            tokenController.LifeTimeValidator(System.Web.HttpContext.Current);
+
             GetInidcadores();
             return View();
         }
@@ -80,7 +85,7 @@ namespace AdmServiciosV2.Controllers
         [HttpPost]
         public ActionResult Guardar(string Nombre, string Apellido, string Telefono, string Tipo, string Estado)
         {
-
+            tokenController.LifeTimeValidator(System.Web.HttpContext.Current);
 
             try
             {
@@ -125,6 +130,7 @@ namespace AdmServiciosV2.Controllers
 
         private ClienteCLS GetCliente(int id)
         {
+            tokenController.LifeTimeValidator(System.Web.HttpContext.Current);
 
             HttpClient httpClient = new HttpClient();
             httpClient.BaseAddress = new Uri(baseURL);
@@ -140,6 +146,8 @@ namespace AdmServiciosV2.Controllers
 
         public ActionResult Editar(int id)
         {
+            tokenController.LifeTimeValidator(System.Web.HttpContext.Current);
+
             GetInidcadores();
 
             ClienteCLS cliente = new ClienteCLS();
@@ -159,6 +167,8 @@ namespace AdmServiciosV2.Controllers
         [HttpPost]
         public ActionResult Editar(int IdCliente, string Nombre, string Apellido, string Telefono, string Tipo, string Estado)
         {
+            tokenController.LifeTimeValidator(System.Web.HttpContext.Current);
+
             try
             {
                 ClienteCLS cliente = new ClienteCLS();
@@ -199,6 +209,8 @@ namespace AdmServiciosV2.Controllers
 
         public ActionResult Eliminar(int id)
         {
+            tokenController.LifeTimeValidator(System.Web.HttpContext.Current);
+
             GetInidcadores();
 
             ClienteCLS cliente = new ClienteCLS();
@@ -218,6 +230,8 @@ namespace AdmServiciosV2.Controllers
         [HttpPost]
         public ActionResult Eliminar(ClienteCLS oCliente)
         {
+            tokenController.LifeTimeValidator(System.Web.HttpContext.Current);
+
             HttpClient httpClient = new HttpClient();
             httpClient.BaseAddress = new Uri(baseURL);
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));

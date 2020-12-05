@@ -14,6 +14,7 @@ namespace AdmServiciosV2.Controllers
     public class HomeController : Controller
     {
         private string baseURL = "https://localhost:44362/";
+        private TokenController tokenController = new TokenController();
 
         public ActionResult Index()
         {
@@ -21,6 +22,8 @@ namespace AdmServiciosV2.Controllers
             {
                 return RedirectToAction("Index", "Token");
             }
+
+            tokenController.LifeTimeValidator(System.Web.HttpContext.Current);
 
             GetInidcadores();
 
@@ -45,6 +48,8 @@ namespace AdmServiciosV2.Controllers
 
         public ActionResult DetailInvoice(int id)
         {
+            tokenController.LifeTimeValidator(System.Web.HttpContext.Current);
+
             GetInidcadores();
 
             HttpClient httpClient = new HttpClient();
