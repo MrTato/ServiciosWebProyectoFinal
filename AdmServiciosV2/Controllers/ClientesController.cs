@@ -23,6 +23,8 @@ namespace AdmServiciosV2.Controllers
                 return RedirectToAction("Index", "Token");
             }
 
+            new TokenController().LifeTimeValidator(System.Web.HttpContext.Current);
+
             GetInidcadores();
 
             HttpClient httpClient = new HttpClient();
