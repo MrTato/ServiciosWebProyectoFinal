@@ -180,6 +180,7 @@
     <Compile Include="Controllers\DireccionsController.cs" />
     <Compile Include="Controllers\FacturasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\IndicadoresController.cs" />
     <Compile Include="Controllers\ListClientController.cs" />
     <Compile Include="Controllers\ServiciosController.cs" />
     <Compile Include="Controllers\TipoServiciosController.cs" />
@@ -328,6 +329,9 @@
       <DependentUpon>ModelSTPR.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SP_DetailsInvoice_Result.cs">
+      <DependentUpon>ModelSTPR.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SP_Indicadores_Result.cs">
       <DependentUpon>ModelSTPR.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SP_ListClient_Result.cs">

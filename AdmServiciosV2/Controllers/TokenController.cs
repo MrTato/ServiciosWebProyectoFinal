@@ -25,6 +25,7 @@ namespace AdmServiciosV2.Controllers
             else
             {
                 ViewBag.Message = "Presione logout para cerrar la sesión";
+                return RedirectToAction("Index", "Home");
             }
 
             return View();
@@ -62,6 +63,23 @@ namespace AdmServiciosV2.Controllers
             ViewBag.Message = "Usuario ha salido de la sesion";
 
             return View("Index");
+        }
+
+        private void GetInidcadores()
+        {
+            HttpClient httpClient = new HttpClient();
+            httpClient.BaseAddress = new Uri(baseUrl);
+            httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session["token"].ToString());
+
+            HttpResponseMessage response = httpClient.GetAsync("api/Indicadores").Result;
+            string data = response.Content.ReadAsStringAsync().Result;
+            IndicadoresCLS indicadores = JsonConvert.DeserializeObject<IndicadoresCLS>(data);
+
+            ViewBag.TotalFacturas = indicadores.TotalFacturas;
+            ViewBag.ServiciosFacturados = indicadores.ServiciosFacturados;
+            ViewBag.TotalServicios = indicadores.TotalServicios;
+            ViewBag.TotalClientes = indicadores.TotalClientes;
         }
     }
 }
