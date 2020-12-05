@@ -129,6 +129,7 @@
     <Compile Include="Controllers\DetalleFacturaController.cs" />
     <Compile Include="Controllers\DireccionController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ServicioController.cs" />
     <Compile Include="Controllers\TokenController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -188,10 +189,10 @@
     <Content Include="Views\Home\Editar.cshtml" />
     <Content Include="Views\Direccion\ListaDireccion.cshtml" />
     <Content Include="Views\DetalleFactura\ListaDetalleFactura.cshtml" />
+    <Content Include="Views\Servicio\ListaServicio.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Servicio\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
