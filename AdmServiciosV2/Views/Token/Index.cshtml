@@ -1,9 +1,75 @@
 ﻿
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "LOGIN";
     Layout = null;
 }
-<br />
-<input type="button" class="btn btn-success" value="Login" onclick="location.href='@Url.Action("Login","Token")'" />
-<input type="button" class="btn btn-danger" value="Logut" onclick="location.href='@Url.Action("Logout","Token")'" />
-<h2>@ViewBag.Message</h2>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="~/Content/style-login.css" rel="stylesheet" />
+    <title>LOGIN</title>
+</head>
+<body>
+    <div class="wrapper">
+
+
+        <div class="panel">
+            <ul class="panel__menu" id="menu">
+                <hr />
+                <li id="signIn"> <a href="#">Login</a></li>
+                <li id="signUp"><a href="#">Sign up</a></li>
+            </ul>
+            <div class="panel__wrap">
+                <div class="panel__box active" id="signInBox">
+                    <label>
+                        Email
+                        <input type="email" />
+                    </label>
+                    <label>
+                        Password
+                        <input type="password" />
+                    </label>
+                    <input type="submit" class="btn btn-success" value="Login" onclick="location.href='@Url.Action("Login","Token")'" />
+                </div>
+                <div class="panel__box" id="signUpBox">
+                    <label>
+                        Email
+                        <input type="email" />
+                    </label>
+                    <label>
+                        Password
+                        <input type="password" />
+                    </label>
+                    <label>
+                        Confirm password
+                        <input type="password" />
+                    </label>
+                    <input type="submit" />
+                </div>
+            </div>
+        </div>
+        <ul class="bg-bubbles">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+
+        </ul>
+
+
+    </div>
+
+    <script src="~/Scripts/script-login.js"></script>
+</body>
+</html>
+

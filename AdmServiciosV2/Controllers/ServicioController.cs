@@ -11,11 +11,11 @@ using System.Web.Mvc;
 
 namespace AdmServiciosV2.Controllers
 {
-    public class ClientesController : Controller
+    public class ServicioController : Controller
     {
         private string baseURL = "https://localhost:44362/";
 
-        // GET: Clientes
+        // GET: Servicio
         public ActionResult Index()
         {
             if (!UsuarioAutenticado())
@@ -30,7 +30,7 @@ namespace AdmServiciosV2.Controllers
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session["token"].ToString());
-            HttpResponseMessage response = httpClient.GetAsync("api/Clientes").Result;
+            HttpResponseMessage response = httpClient.GetAsync("api/Servicios").Result;
             if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
             {
                 return RedirectToAction("Index", "Token");
@@ -38,35 +38,26 @@ namespace AdmServiciosV2.Controllers
             else
             {
                 string data = response.Content.ReadAsStringAsync().Result;
-                List<ClienteCLS> clientes = JsonConvert.DeserializeObject<List<ClienteCLS>>(data);
+                List<ServicioCLS> servicios = JsonConvert.DeserializeObject<List<ServicioCLS>>(data);
 
-                return View(clientes);
+                return View(servicios);
             }
         }
 
-        public ActionResult DetailCliente(int id)
+        public ActionResult DetailServicio(int id)
         {
             GetInidcadores();
 
-            HttpClient httpClient = new HttpClient();
-            httpClient.BaseAddress = new Uri(baseURL);
-            httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session["token"].ToString());
+            var item = GetServicio(id);
 
-            HttpResponseMessage response = httpClient.GetAsync($"api/Clientes/{id}").Result;
-            string data = response.Content.ReadAsStringAsync().Result;
-            ClienteCLS item = JsonConvert.DeserializeObject<ClienteCLS>(data);
+            ServicioCLS servicio = new ServicioCLS();
 
-            ClienteCLS cliente = new ClienteCLS();
+            servicio.IdServicio = item.IdServicio;
+            servicio.IdTipoServicio = item.IdTipoServicio;
+            servicio.Nombre = item.Nombre;
+            servicio.CostoBase = item.CostoBase;
 
-            cliente.IdCliente = item.IdCliente;
-            cliente.Nombre = item.Nombre;
-            cliente.Apellido = item.Apellido;
-            cliente.Telefono = item.Telefono;
-            cliente.Tipo = item.Tipo;
-            cliente.Estado = item.Estado;
-
-            return View(cliente);
+            return View(servicio);
         }
 
         public ActionResult Guardar()
@@ -77,32 +68,41 @@ namespace AdmServiciosV2.Controllers
         }
 
         [HttpPost]
-        public ActionResult Guardar(string Nombre, string Apellido, string Telefono, string Tipo, string Estado)
+        public ActionResult Guardar(
+            int IdServicio,
+            int IdTipoServicio,
+            string Nombre,
+            Nullable<decimal> CostoBase
+            )
         {
 
 
             try
             {
-                ClienteCLS cliente = new ClienteCLS();
-                cliente.IdCliente = 0;
-                cliente.Nombre = Nombre;
-                cliente.Apellido = Apellido;
-                cliente.Telefono = Telefono;
-                cliente.Tipo = Tipo;
-                cliente.Estado = Estado;
+                ServicioCLS servicio = new ServicioCLS();
+                servicio.IdServicio = IdServicio;
+                servicio.IdTipoServicio = IdTipoServicio;
+                servicio.Nombre = Nombre;
+                servicio.CostoBase = CostoBase;
 
                 HttpClient httpClient = new HttpClient();
                 httpClient.BaseAddress = new Uri(baseURL);
                 httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session["token"].ToString());
 
-                string clienteJson = JsonConvert.SerializeObject(cliente);
-                HttpContent body = new StringContent(clienteJson, Encoding.UTF8, "application/json");
+                string servicioJson = JsonConvert.SerializeObject(servicio);
+                HttpContent body = new StringContent(servicioJson, Encoding.UTF8, "application/json");
 
 
-                HttpResponseMessage response = httpClient.PostAsync("api/Clientes", body).Result;
+                HttpResponseMessage response = httpClient.PostAsync("api/Servicios", body).Result;
                 if (response.IsSuccessStatusCode)
                 {
+                    /*return Json(
+                        new
+                        {
+                            success = true,
+                            message = "El cliente fue creado satisfactoriamente"
+                        }, JsonRequestBehavior.AllowGet);*/
                     return RedirectToAction("Index");
                 }
 
@@ -122,7 +122,7 @@ namespace AdmServiciosV2.Controllers
 
         }
 
-        private ClienteCLS GetCliente(int id)
+        private ServicioCLS GetServicio(int id)
         {
 
             HttpClient httpClient = new HttpClient();
@@ -130,56 +130,63 @@ namespace AdmServiciosV2.Controllers
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session["token"].ToString());
 
-            HttpResponseMessage response = httpClient.GetAsync($"api/Clientes/{id}").Result;
+            HttpResponseMessage response = httpClient.GetAsync($"api/Servicios/{id}").Result;
             string data = response.Content.ReadAsStringAsync().Result;
-            ClienteCLS clientes = JsonConvert.DeserializeObject<ClienteCLS>(data);
+            ServicioCLS servicio = JsonConvert.DeserializeObject<ServicioCLS>(data);
 
-            return clientes;
+            return servicio;
         }
 
         public ActionResult Editar(int id)
         {
             GetInidcadores();
 
-            ClienteCLS cliente = new ClienteCLS();
+            ServicioCLS servicio = new ServicioCLS();
 
-            var item = GetCliente(id);
+            var item = GetServicio(id);
 
-            cliente.IdCliente = item.IdCliente;
-            cliente.Nombre = item.Nombre;
-            cliente.Apellido = item.Apellido;
-            cliente.Telefono = item.Telefono;
-            cliente.Tipo = item.Tipo;
-            cliente.Estado = item.Estado;
+            servicio.IdServicio = item.IdServicio;
+            servicio.IdTipoServicio = item.IdTipoServicio;
+            servicio.Nombre = item.Nombre;
+            servicio.CostoBase = item.CostoBase;
 
-            return View(cliente);
+            return View(servicio);
         }
 
         [HttpPost]
-        public ActionResult Editar(int IdCliente, string Nombre, string Apellido, string Telefono, string Tipo, string Estado)
+        public ActionResult Editar(
+            int IdServicio,
+            int IdTipoServicio,
+            string Nombre,
+            Nullable<decimal> CostoBase
+            )
         {
             try
             {
-                ClienteCLS cliente = new ClienteCLS();
-                cliente.IdCliente = IdCliente;
-                cliente.Nombre = Nombre;
-                cliente.Apellido = Apellido;
-                cliente.Telefono = Telefono;
-                cliente.Tipo = Tipo;
-                cliente.Estado = Estado;
+                ServicioCLS servicio = new ServicioCLS();
+                servicio.IdServicio = IdServicio;
+                servicio.IdTipoServicio = IdTipoServicio;
+                servicio.Nombre = Nombre;
+                servicio.CostoBase = CostoBase;
 
                 HttpClient httpClient = new HttpClient();
                 httpClient.BaseAddress = new Uri(baseURL);
                 httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session["token"].ToString());
 
-                string clienteJson = JsonConvert.SerializeObject(cliente);
-                HttpContent body = new StringContent(clienteJson, Encoding.UTF8, "application/json");
+                string servicioJson = JsonConvert.SerializeObject(servicio);
+                HttpContent body = new StringContent(servicioJson, Encoding.UTF8, "application/json");
 
 
-                HttpResponseMessage response = httpClient.PutAsync($"api/Clientes/{IdCliente}", body).Result;
+                HttpResponseMessage response = httpClient.PutAsync($"api/Servicios/{IdServicio}", body).Result;
                 if (response.IsSuccessStatusCode)
                 {
+                    /*return Json(
+                        new
+                        {
+                            success = true,
+                            message = "Cliente modificado satisfactoriamente"
+                        }, JsonRequestBehavior.AllowGet);*/
                     return RedirectToAction("Index");
                 }
                 throw new Exception("Error al guardar");
@@ -200,32 +207,36 @@ namespace AdmServiciosV2.Controllers
         {
             GetInidcadores();
 
-            ClienteCLS cliente = new ClienteCLS();
+            ServicioCLS servicio = new ServicioCLS();
 
-            var item = GetCliente(id);
+            var item = GetServicio(id);
 
-            cliente.IdCliente = item.IdCliente;
-            cliente.Nombre = item.Nombre;
-            cliente.Apellido = item.Apellido;
-            cliente.Telefono = item.Telefono;
-            cliente.Tipo = item.Tipo;
-            cliente.Estado = item.Estado;
+            servicio.IdServicio = item.IdServicio;
+            servicio.IdTipoServicio = item.IdTipoServicio;
+            servicio.Nombre = item.Nombre;
+            servicio.CostoBase = item.CostoBase;
 
-            return View(cliente);
+            return View(servicio);
         }
 
         [HttpPost]
-        public ActionResult Eliminar(ClienteCLS oCliente)
+        public ActionResult Eliminar(ServicioCLS servicio)
         {
             HttpClient httpClient = new HttpClient();
             httpClient.BaseAddress = new Uri(baseURL);
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session["token"].ToString());
 
-            HttpResponseMessage response = httpClient.DeleteAsync($"api/Clientes/{oCliente.IdCliente}").Result;
+            HttpResponseMessage response = httpClient.DeleteAsync($"api/Servicios/{servicio.IdServicio}").Result;
 
             if (response.IsSuccessStatusCode)
             {
+                /*return Json(
+                    new
+                    {
+                        success = true,
+                        message = "El cliente fue eliminado satisfactoriamente"
+                    }, JsonRequestBehavior.AllowGet);*/
                 return RedirectToAction("Index");
             }
 

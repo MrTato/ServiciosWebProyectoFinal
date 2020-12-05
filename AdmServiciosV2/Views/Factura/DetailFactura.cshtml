@@ -1,0 +1,68 @@
+﻿@model AdmServiciosV2.Models.FacturaCLS
+
+@{
+    ViewBag.Title = "DetailFactura";
+    ViewBag.TituloChart = "Detalle Factura";
+}
+
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.IdFactura)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IdFactura)
+        </dd>
+        <br />
+        <hr />
+        <dt>
+            @Html.DisplayNameFor(model => model.Numero)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Numero)
+        </dd>
+        <br />
+        <hr />
+        <dt>
+            @Html.DisplayNameFor(model => model.IdCliente)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IdCliente)
+        </dd>
+        <br />
+        <hr />
+        <dt>
+            @Html.DisplayNameFor(model => model.IdDireccion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IdDireccion)
+        </dd>
+        <br />
+        <hr />
+        <dt>
+            @Html.DisplayNameFor(model => model.Fecha)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fecha)
+        </dd>
+        <br />
+        <hr />
+        <dt>
+            @Html.DisplayNameFor(model => model.Total)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Total)
+        </dd>
+        <br />
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

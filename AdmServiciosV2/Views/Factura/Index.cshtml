@@ -1,0 +1,60 @@
+﻿@model IEnumerable<AdmServiciosV2.Models.FacturaCLS>
+
+@{
+    ViewBag.Title = "Facturas";
+    ViewBag.TituloChart = "Lista Facturas";
+}
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table id="tabla-casos" class="table" style="width:100%;">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.IdFactura)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Numero)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IdCliente)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IdDireccion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Fecha)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Total)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.IdFactura)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Numero)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IdCliente)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IdDireccion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Fecha)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Total)
+        </td>
+        <td>
+            @Html.ActionLink("Ver", "DetailFactura", "Factura", new { id = item.IdFactura }, new { @class = "button b-green" })
+        </td>
+    </tr>
+}
+
+</table>

@@ -5,61 +5,64 @@
     ViewBag.TituloChart = "Detalle cliente";
 }
 
-<div>
-    <h4>ClienteCLS</h4>
-    <hr />
+<div style="width:350px">
     <dl class="dl-horizontal">
-        <dt>
+        <dt style="float: left;">
             @Html.DisplayNameFor(model => model.IdCliente)
         </dt>
-
-        <dd>
+        <dd style="float:right;">
             @Html.DisplayFor(model => model.IdCliente)
         </dd>
-
-        <dt>
+        <br />
+        <hr />
+        <dt style="float: left;">
             @Html.DisplayNameFor(model => model.Nombre)
         </dt>
 
-        <dd>
+        <dd style="float:right;">
             @Html.DisplayFor(model => model.Nombre)
         </dd>
-
-        <dt>
+        <br />
+        <hr />
+        <dt style="float: left;">
             @Html.DisplayNameFor(model => model.Apellido)
         </dt>
 
-        <dd>
+        <dd style="float:right;">
             @Html.DisplayFor(model => model.Apellido)
         </dd>
-
-        <dt>
+        <br />
+        <hr />
+        <dt style="float: left;">
             @Html.DisplayNameFor(model => model.Telefono)
         </dt>
 
-        <dd>
+        <dd style="float:right;">
             @Html.DisplayFor(model => model.Telefono)
         </dd>
-
-        <dt>
+        <br />
+        <hr />
+        <dt style="float: left;">
             @Html.DisplayNameFor(model => model.Tipo)
         </dt>
 
-        <dd>
+        <dd style="float:right;">
             @Html.DisplayFor(model => model.Tipo)
         </dd>
-
-        <dt>
+        <br />
+        <hr />
+        <dt style="float: left;">
             @Html.DisplayNameFor(model => model.Estado)
         </dt>
 
-        <dd>
+        <dd style="float:right;">
             @Html.DisplayFor(model => model.Estado)
         </dd>
-
+        <br />
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Edit", "Editar", "Clientes", new { id = Model.IdCliente }, new { @class = "button b-green" }) |
+    @Html.ActionLink("Delete", "Eliminar", "Clientes", new { id = Model.IdCliente }, new { @class = "button b-green" }) |
+    @Html.ActionLink("Back to List", "Index", "Clientes", null, new { @class = "button b-green" })
 </p>

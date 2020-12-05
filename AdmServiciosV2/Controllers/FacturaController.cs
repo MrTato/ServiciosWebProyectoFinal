@@ -11,11 +11,11 @@ using System.Web.Mvc;
 
 namespace AdmServiciosV2.Controllers
 {
-    public class ClientesController : Controller
+    public class FacturaController : Controller
     {
         private string baseURL = "https://localhost:44362/";
 
-        // GET: Clientes
+        // GET: Factura
         public ActionResult Index()
         {
             if (!UsuarioAutenticado())
@@ -30,7 +30,7 @@ namespace AdmServiciosV2.Controllers
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session["token"].ToString());
-            HttpResponseMessage response = httpClient.GetAsync("api/Clientes").Result;
+            HttpResponseMessage response = httpClient.GetAsync("api/Facturas").Result;
             if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
             {
                 return RedirectToAction("Index", "Token");
@@ -38,13 +38,13 @@ namespace AdmServiciosV2.Controllers
             else
             {
                 string data = response.Content.ReadAsStringAsync().Result;
-                List<ClienteCLS> clientes = JsonConvert.DeserializeObject<List<ClienteCLS>>(data);
+                List<FacturaCLS> clientes = JsonConvert.DeserializeObject<List<FacturaCLS>>(data);
 
                 return View(clientes);
             }
         }
 
-        public ActionResult DetailCliente(int id)
+        public ActionResult DetailFactura(int id)
         {
             GetInidcadores();
 
@@ -53,20 +53,20 @@ namespace AdmServiciosV2.Controllers
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session["token"].ToString());
 
-            HttpResponseMessage response = httpClient.GetAsync($"api/Clientes/{id}").Result;
+            HttpResponseMessage response = httpClient.GetAsync($"api/Facturas/{id}").Result;
             string data = response.Content.ReadAsStringAsync().Result;
-            ClienteCLS item = JsonConvert.DeserializeObject<ClienteCLS>(data);
+            FacturaCLS item = JsonConvert.DeserializeObject<FacturaCLS>(data);
 
-            ClienteCLS cliente = new ClienteCLS();
+            FacturaCLS factura = new FacturaCLS();
 
-            cliente.IdCliente = item.IdCliente;
-            cliente.Nombre = item.Nombre;
-            cliente.Apellido = item.Apellido;
-            cliente.Telefono = item.Telefono;
-            cliente.Tipo = item.Tipo;
-            cliente.Estado = item.Estado;
+            factura.IdFactura = item.IdFactura;
+            factura.Numero = item.Numero;
+            factura.IdCliente = item.IdCliente;
+            factura.IdDireccion = item.IdDireccion;
+            factura.Fecha = item.Fecha;
+            factura.Total = item.Total;
 
-            return View(cliente);
+            return View(factura);
         }
 
         public ActionResult Guardar()
@@ -77,30 +77,29 @@ namespace AdmServiciosV2.Controllers
         }
 
         [HttpPost]
-        public ActionResult Guardar(string Nombre, string Apellido, string Telefono, string Tipo, string Estado)
+        public ActionResult Guardar(string Numero, int IdCliente, int IdDireccion, DateTime Fecha, decimal Total)
         {
-
-
             try
             {
-                ClienteCLS cliente = new ClienteCLS();
-                cliente.IdCliente = 0;
-                cliente.Nombre = Nombre;
-                cliente.Apellido = Apellido;
-                cliente.Telefono = Telefono;
-                cliente.Tipo = Tipo;
-                cliente.Estado = Estado;
+                FacturaCLS factura = new FacturaCLS();
+
+                factura.IdFactura = 0;
+                factura.Numero = Numero;
+                factura.IdCliente = IdCliente;
+                factura.IdDireccion = IdDireccion;
+                factura.Fecha = Fecha;
+                factura.Total = Total;
 
                 HttpClient httpClient = new HttpClient();
                 httpClient.BaseAddress = new Uri(baseURL);
                 httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session["token"].ToString());
 
-                string clienteJson = JsonConvert.SerializeObject(cliente);
+                string clienteJson = JsonConvert.SerializeObject(factura);
                 HttpContent body = new StringContent(clienteJson, Encoding.UTF8, "application/json");
 
 
-                HttpResponseMessage response = httpClient.PostAsync("api/Clientes", body).Result;
+                HttpResponseMessage response = httpClient.PostAsync("api/Facturas", body).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     return RedirectToAction("Index");
@@ -119,65 +118,63 @@ namespace AdmServiciosV2.Controllers
                         message = ex.InnerException
                     }, JsonRequestBehavior.AllowGet);
             }
-
         }
 
-        private ClienteCLS GetCliente(int id)
+        private FacturaCLS GetFactura(int id)
         {
-
             HttpClient httpClient = new HttpClient();
             httpClient.BaseAddress = new Uri(baseURL);
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session["token"].ToString());
 
-            HttpResponseMessage response = httpClient.GetAsync($"api/Clientes/{id}").Result;
+            HttpResponseMessage response = httpClient.GetAsync($"api/Facturas/{id}").Result;
             string data = response.Content.ReadAsStringAsync().Result;
-            ClienteCLS clientes = JsonConvert.DeserializeObject<ClienteCLS>(data);
+            FacturaCLS item = JsonConvert.DeserializeObject<FacturaCLS>(data);
 
-            return clientes;
+            return item;
         }
 
         public ActionResult Editar(int id)
         {
             GetInidcadores();
 
-            ClienteCLS cliente = new ClienteCLS();
+            FacturaCLS factura = new FacturaCLS();
 
-            var item = GetCliente(id);
+            var item = GetFactura(id);
 
-            cliente.IdCliente = item.IdCliente;
-            cliente.Nombre = item.Nombre;
-            cliente.Apellido = item.Apellido;
-            cliente.Telefono = item.Telefono;
-            cliente.Tipo = item.Tipo;
-            cliente.Estado = item.Estado;
+            factura.IdFactura = item.IdFactura;
+            factura.Numero = item.Numero;
+            factura.IdCliente = item.IdCliente;
+            factura.IdDireccion = item.IdDireccion;
+            factura.Fecha = item.Fecha;
+            factura.Total = item.Total;
 
-            return View(cliente);
+            return View(factura);
         }
 
         [HttpPost]
-        public ActionResult Editar(int IdCliente, string Nombre, string Apellido, string Telefono, string Tipo, string Estado)
+        public ActionResult Editar(int IdFactura, string Numero, int IdCliente, int IdDireccion, DateTime Fecha, decimal Total)
         {
             try
             {
-                ClienteCLS cliente = new ClienteCLS();
-                cliente.IdCliente = IdCliente;
-                cliente.Nombre = Nombre;
-                cliente.Apellido = Apellido;
-                cliente.Telefono = Telefono;
-                cliente.Tipo = Tipo;
-                cliente.Estado = Estado;
+            FacturaCLS factura = new FacturaCLS();
 
-                HttpClient httpClient = new HttpClient();
-                httpClient.BaseAddress = new Uri(baseURL);
-                httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session["token"].ToString());
+            factura.IdFactura =IdFactura;
+            factura.Numero = Numero;
+            factura.IdCliente = IdCliente;
+            factura.IdDireccion = IdDireccion;
+            factura.Fecha = Fecha;
+            factura.Total = Total;
 
-                string clienteJson = JsonConvert.SerializeObject(cliente);
-                HttpContent body = new StringContent(clienteJson, Encoding.UTF8, "application/json");
+            HttpClient httpClient = new HttpClient();
+            httpClient.BaseAddress = new Uri(baseURL);
+            httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session["token"].ToString());
 
+            string clienteJson = JsonConvert.SerializeObject(factura);
+            HttpContent body = new StringContent(clienteJson, Encoding.UTF8, "application/json");
 
-                HttpResponseMessage response = httpClient.PutAsync($"api/Clientes/{IdCliente}", body).Result;
+            HttpResponseMessage response = httpClient.PutAsync($"api/Facturas/{IdFactura}", body).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     return RedirectToAction("Index");
@@ -200,29 +197,29 @@ namespace AdmServiciosV2.Controllers
         {
             GetInidcadores();
 
-            ClienteCLS cliente = new ClienteCLS();
+            FacturaCLS factura = new FacturaCLS();
 
-            var item = GetCliente(id);
+            var item = GetFactura(id);
 
-            cliente.IdCliente = item.IdCliente;
-            cliente.Nombre = item.Nombre;
-            cliente.Apellido = item.Apellido;
-            cliente.Telefono = item.Telefono;
-            cliente.Tipo = item.Tipo;
-            cliente.Estado = item.Estado;
+            factura.IdFactura = item.IdFactura;
+            factura.Numero = item.Numero;
+            factura.IdCliente = item.IdCliente;
+            factura.IdDireccion = item.IdDireccion;
+            factura.Fecha = item.Fecha;
+            factura.Total = item.Total;
 
-            return View(cliente);
+            return View(factura);
         }
 
         [HttpPost]
-        public ActionResult Eliminar(ClienteCLS oCliente)
+        public ActionResult Eliminar(FacturaCLS oFactura)
         {
             HttpClient httpClient = new HttpClient();
             httpClient.BaseAddress = new Uri(baseURL);
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session["token"].ToString());
 
-            HttpResponseMessage response = httpClient.DeleteAsync($"api/Clientes/{oCliente.IdCliente}").Result;
+            HttpResponseMessage response = httpClient.DeleteAsync($"api/Facturas/{oFactura.IdFactura}").Result;
 
             if (response.IsSuccessStatusCode)
             {

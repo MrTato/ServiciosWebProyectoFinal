@@ -545,3 +545,10 @@ main {
         border-radius: 5px;
         transition: all .5s;
     }
+
+dt {
+    float:left;
+}
+dd {
+    float: right;
+}

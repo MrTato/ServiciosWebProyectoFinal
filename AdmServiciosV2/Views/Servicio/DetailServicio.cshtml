@@ -1,0 +1,53 @@
+﻿@model AdmServiciosV2.Models.ServicioCLS
+
+@{
+    ViewBag.Title = "DetailServicio";
+}
+
+<h2>DetailServicio</h2>
+
+<div>
+    <h4>ServicioCLS</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.IdServicio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IdServicio)
+        </dd>
+        <br />
+        <hr />
+        <dt>
+            @Html.DisplayNameFor(model => model.IdTipoServicio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IdTipoServicio)
+        </dd>
+        <br />
+        <hr />
+        <dt>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+        <br />
+        <hr />
+        <dt>
+            @Html.DisplayNameFor(model => model.CostoBase)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CostoBase)
+        </dd>
+        <br />
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
