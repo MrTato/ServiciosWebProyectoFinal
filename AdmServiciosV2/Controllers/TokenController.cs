@@ -93,7 +93,7 @@ namespace AdmServiciosV2.Controllers
             Token token = JsonConvert.DeserializeObject<Token>(stringJWT);
 
             context.Session.Add("token", token.AccessToken);
-            context.Session.Add("expiration", DateTime.UtcNow.AddMinutes(1));
+            context.Session.Add("expiration", DateTime.UtcNow.AddMinutes(50));
 
             return token;
         }
