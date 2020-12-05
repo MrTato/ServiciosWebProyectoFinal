@@ -32,7 +32,7 @@
                 <div class="main-title">
                     <img src="/img/hello.svg" alt="Hello icon">
                     <div class="main-greeting">
-                        <h1>Hola! Hosffman</h1>
+                        <h1>Hola! Admin</h1>
                         <p>Bienvenido a tu dashboard</p>
                     </div>
                 </div>
@@ -98,7 +98,7 @@
             <div class="sidebar-menu">
                 <div class="sidebar-link">
                     <i class="fa fa-home"></i>
-                    <a >@Html.ActionLink("Home", "Index", "Home")</a>
+                    <a>@Html.ActionLink("Home", "Index", "Home")</a>
                 </div>
                 <div class="sidebar-link">
                     <i class="fa fa-home"></i>
@@ -106,23 +106,31 @@
                 </div>
                 <div class="sidebar-link">
                     <i class="fa fa-home"></i>
-                    <a href="#">Detalle facturas</a>
+                    <a>@Html.ActionLink("Detalles facturas", "Index", "DetalleFactura")</a>
                 </div>
                 <div class="sidebar-link">
                     <i class="fa fa-home"></i>
-                    <a href="#">Servicios</a>
+                    <a>@Html.ActionLink("Direcciones", "Index", "Direccion")</a>
                 </div>
                 <div class="sidebar-link">
                     <i class="fa fa-home"></i>
-                    <a href="#">Tipo servicios</a>
+                    <a>@Html.ActionLink("Facturas", "Index", "Factura")</a>
                 </div>
                 <div class="sidebar-link">
                     <i class="fa fa-home"></i>
-                    <a href="#">Ubicaciones</a>
+                    <a>@Html.ActionLink("Servicios", "Index", "Servicio")</a>
+                </div>
+                <div class="sidebar-link">
+                    <i class="fa fa-home"></i>
+                    <a>@Html.ActionLink("Tipos de servicios", "Index", "TipoServicio")</a>
+                </div>
+                <div class="sidebar-link">
+                    <i class="fa fa-home"></i>
+                    <a>@Html.ActionLink("Ubicaciones", "Index", "Ubicacion")</a>
                 </div>
                 <div class="sidebar-logout">
                     <i class="fa fa-power-off"></i>
-                    <a href="#">Log out</a>
+                    <a onclick="location.href='@Url.Action("Logout","Token")'">Log out</a>
                 </div>
             </div>
         </div>

@@ -1,0 +1,42 @@
+﻿@model AdmServiciosV2.Models.UbicacionCLS
+
+@{
+    ViewBag.Title = "DetailUbicacion";
+}
+
+<h2>DetailUbicacion</h2>
+
+<div>
+    <h4>UbicacionCLS</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.IdUbicacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IdUbicacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tipo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tipo)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

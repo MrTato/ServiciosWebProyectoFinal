@@ -79,6 +79,7 @@ namespace AdmServiciosV2.Controllers
             tokenController.LifeTimeValidator(System.Web.HttpContext.Current);
 
             GetInidcadores();
+
             return View();
         }
 

@@ -15,12 +15,15 @@ namespace AdmServiciosV2.Controllers
     {
         private string baseURL = "https://localhost:44362/";
 
-        public ActionResult ListaDireccion()
+        // GET: Direccion
+        public ActionResult Index()
         {
             if (!UsuarioAutenticado())
             {
                 return RedirectToAction("Index", "Token");
             }
+
+            GetInidcadores();
 
             HttpClient httpClient = new HttpClient();
             httpClient.BaseAddress = new Uri(baseURL);
@@ -39,11 +42,28 @@ namespace AdmServiciosV2.Controllers
 
                 return View(direcciones);
             }
+        }
 
+        public ActionResult DetailDireccion(int id)
+        {
+            GetInidcadores();
+
+            var item = GetDireccion(id);
+
+            DireccionCLS direccion = new DireccionCLS();
+
+            direccion.Direccion1 = item.Direccion1;
+            direccion.IdCliente = item.IdCliente;
+            direccion.IdDireccion = item.IdDireccion;
+            direccion.IdUbicacion = item.IdUbicacion;
+
+            return View(direccion);
         }
 
         public ActionResult Guardar()
         {
+            GetInidcadores();
+
             return View();
         }
 
@@ -83,7 +103,7 @@ namespace AdmServiciosV2.Controllers
                             success = true,
                             message = "El cliente fue creado satisfactoriamente"
                         }, JsonRequestBehavior.AllowGet);*/
-                    return RedirectToAction("Lista");
+                    return RedirectToAction("Index");
                 }
 
 
@@ -119,6 +139,8 @@ namespace AdmServiciosV2.Controllers
 
         public ActionResult Editar(int id)
         {
+            GetInidcadores();
+
             DireccionCLS direccion = new DireccionCLS();
 
             var item = GetDireccion(id);
@@ -165,7 +187,7 @@ namespace AdmServiciosV2.Controllers
                             success = true,
                             message = "Cliente modificado satisfactoriamente"
                         }, JsonRequestBehavior.AllowGet);*/
-                    return RedirectToAction("ListaDireccion");
+                    return RedirectToAction("Index");
                 }
                 throw new Exception("Error al guardar");
             }
@@ -183,6 +205,8 @@ namespace AdmServiciosV2.Controllers
 
         public ActionResult Eliminar(int id)
         {
+            GetInidcadores();
+
             DireccionCLS direccion = new DireccionCLS();
 
             var item = GetDireccion(id);
@@ -213,7 +237,7 @@ namespace AdmServiciosV2.Controllers
                         success = true,
                         message = "El cliente fue eliminado satisfactoriamente"
                     }, JsonRequestBehavior.AllowGet);*/
-                return RedirectToAction("Lista");
+                return RedirectToAction("Index");
             }
 
             throw new Exception("Error al eliminar");
@@ -222,6 +246,23 @@ namespace AdmServiciosV2.Controllers
         private bool UsuarioAutenticado()
         {
             return HttpContext.Session["token"] != null;
+        }
+
+        private void GetInidcadores()
+        {
+            HttpClient httpClient = new HttpClient();
+            httpClient.BaseAddress = new Uri(baseURL);
+            httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session["token"].ToString());
+
+            HttpResponseMessage response = httpClient.GetAsync("api/Indicadores").Result;
+            string data = response.Content.ReadAsStringAsync().Result;
+            IndicadoresCLS indicadores = JsonConvert.DeserializeObject<IndicadoresCLS>(data);
+
+            ViewBag.TotalFacturas = indicadores.TotalFacturas;
+            ViewBag.ServiciosFacturados = indicadores.ServiciosFacturados;
+            ViewBag.TotalServicios = indicadores.TotalServicios;
+            ViewBag.TotalClientes = indicadores.TotalClientes;
         }
     }
 }

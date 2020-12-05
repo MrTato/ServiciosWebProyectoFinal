@@ -15,12 +15,15 @@ namespace AdmServiciosV2.Controllers
     {
         private string baseURL = "https://localhost:44362/";
 
-        public ActionResult ListaServicio()
+        // GET: Servicio
+        public ActionResult Index()
         {
             if (!UsuarioAutenticado())
             {
                 return RedirectToAction("Index", "Token");
             }
+
+            GetInidcadores();
 
             HttpClient httpClient = new HttpClient();
             httpClient.BaseAddress = new Uri(baseURL);
@@ -39,11 +42,28 @@ namespace AdmServiciosV2.Controllers
 
                 return View(servicios);
             }
+        }
 
+        public ActionResult DetailServicio(int id)
+        {
+            GetInidcadores();
+
+            var item = GetServicio(id);
+
+            ServicioCLS servicio = new ServicioCLS();
+
+            servicio.IdServicio = item.IdServicio;
+            servicio.IdTipoServicio = item.IdTipoServicio;
+            servicio.Nombre = item.Nombre;
+            servicio.CostoBase = item.CostoBase;
+
+            return View(servicio);
         }
 
         public ActionResult Guardar()
         {
+            GetInidcadores();
+
             return View();
         }
 
@@ -83,7 +103,7 @@ namespace AdmServiciosV2.Controllers
                             success = true,
                             message = "El cliente fue creado satisfactoriamente"
                         }, JsonRequestBehavior.AllowGet);*/
-                    return RedirectToAction("ListaServicio");
+                    return RedirectToAction("Index");
                 }
 
 
@@ -119,6 +139,8 @@ namespace AdmServiciosV2.Controllers
 
         public ActionResult Editar(int id)
         {
+            GetInidcadores();
+
             ServicioCLS servicio = new ServicioCLS();
 
             var item = GetServicio(id);
@@ -165,7 +187,7 @@ namespace AdmServiciosV2.Controllers
                             success = true,
                             message = "Cliente modificado satisfactoriamente"
                         }, JsonRequestBehavior.AllowGet);*/
-                    return RedirectToAction("ListaServicio");
+                    return RedirectToAction("Index");
                 }
                 throw new Exception("Error al guardar");
             }
@@ -183,6 +205,8 @@ namespace AdmServiciosV2.Controllers
 
         public ActionResult Eliminar(int id)
         {
+            GetInidcadores();
+
             ServicioCLS servicio = new ServicioCLS();
 
             var item = GetServicio(id);
@@ -213,7 +237,7 @@ namespace AdmServiciosV2.Controllers
                         success = true,
                         message = "El cliente fue eliminado satisfactoriamente"
                     }, JsonRequestBehavior.AllowGet);*/
-                return RedirectToAction("ListaServicio");
+                return RedirectToAction("Index");
             }
 
             throw new Exception("Error al eliminar");
@@ -222,6 +246,23 @@ namespace AdmServiciosV2.Controllers
         private bool UsuarioAutenticado()
         {
             return HttpContext.Session["token"] != null;
+        }
+
+        private void GetInidcadores()
+        {
+            HttpClient httpClient = new HttpClient();
+            httpClient.BaseAddress = new Uri(baseURL);
+            httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session["token"].ToString());
+
+            HttpResponseMessage response = httpClient.GetAsync("api/Indicadores").Result;
+            string data = response.Content.ReadAsStringAsync().Result;
+            IndicadoresCLS indicadores = JsonConvert.DeserializeObject<IndicadoresCLS>(data);
+
+            ViewBag.TotalFacturas = indicadores.TotalFacturas;
+            ViewBag.ServiciosFacturados = indicadores.ServiciosFacturados;
+            ViewBag.TotalServicios = indicadores.TotalServicios;
+            ViewBag.TotalClientes = indicadores.TotalClientes;
         }
     }
 }

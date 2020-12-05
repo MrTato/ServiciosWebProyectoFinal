@@ -1,0 +1,42 @@
+﻿@model IEnumerable<AdmServiciosV2.Models.TipoServicioCLS>
+
+@{
+    ViewBag.Title = "TiposServicios";
+    ViewBag.TituloChart = "Lista Tipo Servicios";
+}
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table id="tabla-casos" class="table" style="width:100%;">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.IdTipoServicio)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Estado)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.IdTipoServicio)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Descripcion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Estado)
+        </td>
+        <td>
+            @Html.ActionLink("Ver", "DetailTipoServicio", "TipoServicio", new { id = item.IdTipoServicio }, new { @class = "button b-green" })
+        </td>
+    </tr>
+}
+
+</table>

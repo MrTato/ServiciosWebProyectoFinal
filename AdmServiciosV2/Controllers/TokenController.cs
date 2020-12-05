@@ -104,7 +104,7 @@ namespace AdmServiciosV2.Controllers
 
             ViewBag.Message = "Usuario autenticado";
 
-            return View("Index");
+            return RedirectToAction("Index", "Home");
         }
 
         public ActionResult Logout()

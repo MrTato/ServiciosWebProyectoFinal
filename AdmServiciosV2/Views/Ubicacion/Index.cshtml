@@ -1,0 +1,42 @@
+﻿@model IEnumerable<AdmServiciosV2.Models.UbicacionCLS>
+
+@{
+    ViewBag.Title = "Ubicaciones";
+    ViewBag.TituloChart = "Lista Ubicaciones";
+}
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table id="tabla-casos" class="table" style="width:100%;">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.IdUbicacion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tipo)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.IdUbicacion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Tipo)
+        </td>
+        <td>
+            @Html.ActionLink("Ver", "DetailUbicacion", "Ubicacion", new { id = item.IdUbicacion }, new { @class = "button b-green" })
+        </td>
+    </tr>
+}
+
+</table>
