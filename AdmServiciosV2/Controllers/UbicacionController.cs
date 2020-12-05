@@ -13,6 +13,7 @@ namespace AdmServiciosV2.Controllers
     public class UbicacionController : Controller
     {
         private string baseURL = "https://localhost:44362/";
+        private TokenController tokenController = new TokenController();
 
         // GET: Ubicacion
         public ActionResult Index()
@@ -21,6 +22,7 @@ namespace AdmServiciosV2.Controllers
             {
                 return RedirectToAction("Index", "Token");
             }
+            tokenController.LifeTimeValidator(System.Web.HttpContext.Current);
 
             GetInidcadores();
 
@@ -45,6 +47,8 @@ namespace AdmServiciosV2.Controllers
         
         public ActionResult DetailUbicacion(int id)
         {
+            tokenController.LifeTimeValidator(System.Web.HttpContext.Current);
+
             GetInidcadores();
 
             var item = GetUbicacion(id);
@@ -60,6 +64,8 @@ namespace AdmServiciosV2.Controllers
 
         private UbicacionCLS GetUbicacion(int id)
         {
+            tokenController.LifeTimeValidator(System.Web.HttpContext.Current);
+
             HttpClient httpClient = new HttpClient();
             httpClient.BaseAddress = new Uri(baseURL);
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));

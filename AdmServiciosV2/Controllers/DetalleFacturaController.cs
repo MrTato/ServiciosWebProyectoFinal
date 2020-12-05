@@ -14,6 +14,7 @@ namespace AdmServiciosV2.Controllers
     public class DetalleFacturaController : Controller
     {
         private string baseURL = "https://localhost:44362/";
+        private TokenController tokenController = new TokenController();
 
         // GET: DetalleFactura
         public ActionResult Index()
@@ -22,6 +23,8 @@ namespace AdmServiciosV2.Controllers
             {
                 return RedirectToAction("Index", "Token");
             }
+            tokenController.LifeTimeValidator(System.Web.HttpContext.Current);
+
 
             GetInidcadores();
 
@@ -46,6 +49,8 @@ namespace AdmServiciosV2.Controllers
 
         public ActionResult DetailDetalleFactura(int id)
         {
+            tokenController.LifeTimeValidator(System.Web.HttpContext.Current);
+
             GetInidcadores();
 
             DetalleFacturaCLS detalleFactura = new DetalleFacturaCLS();
@@ -64,6 +69,8 @@ namespace AdmServiciosV2.Controllers
 
         public ActionResult Guardar()
         {
+            tokenController.LifeTimeValidator(System.Web.HttpContext.Current);
+
             GetInidcadores();
 
             return View();
@@ -72,7 +79,7 @@ namespace AdmServiciosV2.Controllers
         [HttpPost]
         public ActionResult Guardar(int idDetalleFactura, int IdFactura, int IdServicio, int Cantidad, Nullable<bool> Entregado)
         {
-
+            tokenController.LifeTimeValidator(System.Web.HttpContext.Current);
 
             try
             {
@@ -122,6 +129,7 @@ namespace AdmServiciosV2.Controllers
 
         private DetalleFacturaCLS GetDetalleFactura(int id)
         {
+            tokenController.LifeTimeValidator(System.Web.HttpContext.Current);
 
             HttpClient httpClient = new HttpClient();
             httpClient.BaseAddress = new Uri(baseURL);
@@ -137,6 +145,8 @@ namespace AdmServiciosV2.Controllers
 
         public ActionResult Editar(int id)
         {
+            tokenController.LifeTimeValidator(System.Web.HttpContext.Current);
+
             GetInidcadores();
 
             DetalleFacturaCLS detalleFactura = new DetalleFacturaCLS();
@@ -206,6 +216,8 @@ namespace AdmServiciosV2.Controllers
 
         public ActionResult Eliminar(int id)
         {
+            tokenController.LifeTimeValidator(System.Web.HttpContext.Current);
+
             GetInidcadores();
 
             DetalleFacturaCLS detalleFactura = new DetalleFacturaCLS();
@@ -224,6 +236,8 @@ namespace AdmServiciosV2.Controllers
         [HttpPost]
         public ActionResult Eliminar(DetalleFacturaCLS detalleFactura)
         {
+            tokenController.LifeTimeValidator(System.Web.HttpContext.Current);
+
             HttpClient httpClient = new HttpClient();
             httpClient.BaseAddress = new Uri(baseURL);
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));

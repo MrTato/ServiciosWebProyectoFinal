@@ -14,6 +14,7 @@ namespace AdmServiciosV2.Controllers
     public class DireccionController : Controller
     {
         private string baseURL = "https://localhost:44362/";
+        private TokenController tokenController = new TokenController();
 
         // GET: Direccion
         public ActionResult Index()
@@ -22,6 +23,7 @@ namespace AdmServiciosV2.Controllers
             {
                 return RedirectToAction("Index", "Token");
             }
+            tokenController.LifeTimeValidator(System.Web.HttpContext.Current);
 
             GetInidcadores();
 
@@ -46,6 +48,8 @@ namespace AdmServiciosV2.Controllers
 
         public ActionResult DetailDireccion(int id)
         {
+            tokenController.LifeTimeValidator(System.Web.HttpContext.Current);
+
             GetInidcadores();
 
             var item = GetDireccion(id);
@@ -62,6 +66,8 @@ namespace AdmServiciosV2.Controllers
 
         public ActionResult Guardar()
         {
+            tokenController.LifeTimeValidator(System.Web.HttpContext.Current);
+
             GetInidcadores();
 
             return View();
@@ -76,6 +82,7 @@ namespace AdmServiciosV2.Controllers
             )
         {
 
+            tokenController.LifeTimeValidator(System.Web.HttpContext.Current);
 
             try
             {
@@ -124,6 +131,7 @@ namespace AdmServiciosV2.Controllers
 
         private DireccionCLS GetDireccion(int id)
         {
+            tokenController.LifeTimeValidator(System.Web.HttpContext.Current);
 
             HttpClient httpClient = new HttpClient();
             httpClient.BaseAddress = new Uri(baseURL);
@@ -139,6 +147,8 @@ namespace AdmServiciosV2.Controllers
 
         public ActionResult Editar(int id)
         {
+            tokenController.LifeTimeValidator(System.Web.HttpContext.Current);
+
             GetInidcadores();
 
             DireccionCLS direccion = new DireccionCLS();
@@ -205,6 +215,8 @@ namespace AdmServiciosV2.Controllers
 
         public ActionResult Eliminar(int id)
         {
+            tokenController.LifeTimeValidator(System.Web.HttpContext.Current);
+
             GetInidcadores();
 
             DireccionCLS direccion = new DireccionCLS();
@@ -222,6 +234,8 @@ namespace AdmServiciosV2.Controllers
         [HttpPost]
         public ActionResult Eliminar(DireccionCLS direccion)
         {
+            tokenController.LifeTimeValidator(System.Web.HttpContext.Current);
+
             HttpClient httpClient = new HttpClient();
             httpClient.BaseAddress = new Uri(baseURL);
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));

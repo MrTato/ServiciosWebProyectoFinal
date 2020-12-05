@@ -13,6 +13,7 @@ namespace AdmServiciosV2.Controllers
     public class TipoServicioController : Controller
     {
         private string baseURL = "https://localhost:44362/";
+        private TokenController tokenController = new TokenController();
 
         // GET: TipoServicio
         public ActionResult Index()
@@ -21,6 +22,7 @@ namespace AdmServiciosV2.Controllers
             {
                 return RedirectToAction("Index", "Token");
             }
+            tokenController.LifeTimeValidator(System.Web.HttpContext.Current);
 
             GetInidcadores();
 
@@ -45,6 +47,8 @@ namespace AdmServiciosV2.Controllers
 
         public ActionResult DetailTipoServicio(int id)
         {
+            tokenController.LifeTimeValidator(System.Web.HttpContext.Current);
+
             GetInidcadores();
 
             var item = GetTipoSevicio(id);
@@ -61,6 +65,8 @@ namespace AdmServiciosV2.Controllers
 
         private TipoServicioCLS GetTipoSevicio(int id)
         {
+            tokenController.LifeTimeValidator(System.Web.HttpContext.Current);
+
             HttpClient httpClient = new HttpClient();
             httpClient.BaseAddress = new Uri(baseURL);
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
