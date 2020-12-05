@@ -207,6 +207,24 @@
     <Content Include="Views\Clientes\Guardar.cshtml" />
     <Content Include="Views\Clientes\Editar.cshtml" />
     <Content Include="Views\Clientes\Eliminar.cshtml" />
+    <Content Include="Views\DetalleFactura\Guardar.cshtml" />
+    <Content Include="Views\DetalleFactura\Editar.cshtml" />
+    <Content Include="Views\DetalleFactura\Eliminar.cshtml" />
+    <Content Include="Views\Direccion\Guardar.cshtml" />
+    <Content Include="Views\Direccion\Editar.cshtml" />
+    <Content Include="Views\Direccion\Eliminar.cshtml" />
+    <Content Include="Views\Factura\Guardar.cshtml" />
+    <Content Include="Views\Factura\Editar.cshtml" />
+    <Content Include="Views\Factura\Eliminar.cshtml" />
+    <Content Include="Views\Servicio\Guardar.cshtml" />
+    <Content Include="Views\Servicio\Editar.cshtml" />
+    <Content Include="Views\Servicio\Eliminar.cshtml" />
+    <Content Include="Views\TipoServicio\Eliminar.cshtml" />
+    <Content Include="Views\TipoServicio\Editar.cshtml" />
+    <Content Include="Views\TipoServicio\Guardar.cshtml" />
+    <Content Include="Views\Ubicacion\Eliminar.cshtml" />
+    <Content Include="Views\Ubicacion\Editar.cshtml" />
+    <Content Include="Views\Ubicacion\Guardar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -2,17 +2,14 @@
 
 @{
     ViewBag.Title = "Eliminar";
+    ViewBag.TituloChart = "Eliminar";
 }
-
-<h2>Eliminar</h2>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>ClienteCLS</h4>
-        <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
             @Html.LabelFor(model => model.IdCliente, htmlAttributes: new { @class = "control-label col-md-2" })

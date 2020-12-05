@@ -59,7 +59,7 @@ body {
     color: #3B9668;
 }
 
-.container {
+.containers {
     display: grid;
     height: 100vh;
     grid-template-columns: 0.8fr 1fr 1fr 1fr;
@@ -67,7 +67,7 @@ body {
     grid-template-areas: "sidebar nav nav nav" "sidebar main main main";
 }
 
-.navbar {
+.navbars {
     background: #FFFFFF;
     grid-area: nav;
     height: 60px;
@@ -545,10 +545,3 @@ main {
         border-radius: 5px;
         transition: all .5s;
     }
-
-dt {
-    float:left;
-}
-dd {
-    float: right;
-}

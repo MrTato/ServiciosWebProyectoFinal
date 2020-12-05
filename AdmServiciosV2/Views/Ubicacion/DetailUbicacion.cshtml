@@ -37,6 +37,7 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Edit", "Editar", "Ubicacion", new { id = Model.IdUbicacion }, new { @class = "button b-green" }) |
+    @Html.ActionLink("Delete", "Eliminar", "Ubicacion", new { id = Model.IdUbicacion }, new { @class = "button b-green" }) |
+    @Html.ActionLink("Back to List", "Index", "Ubicacion", null, new { @class = "button b-green" })
 </p>
